@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Domain.Entities.Courses>
+
+@{
+    ViewData["Title"] = "Courses List";
+}
+
+<h2>Courses</h2>
+<a asp-controller="Courses" asp-action="Create" class="btn btn-success mb-2">Create New Course</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Category</th>
+            <th>User</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.Title</td>
+                <td>@course.Description</td>
+                <td>@course.Status</td>
+                <td>@course.Category</td>
+                <td>@course.UserProfile.PhoneNumber</td>
+            </tr>
+        }
+    </tbody>
+</table>
