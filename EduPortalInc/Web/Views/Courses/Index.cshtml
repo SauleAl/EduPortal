@@ -1,32 +1,36 @@
 ﻿@model IEnumerable<Domain.Entities.Courses>
-
-@{
-    ViewData["Title"] = "Courses List";
+<h1>Курсы</h1>
+@if (User.Identity?.IsAuthenticated == true)
+{
+    <p>Добро пожаловать, @User.Identity.Name!</p>
 }
-
-<h2>Courses</h2>
-<a asp-controller="Courses" asp-action="Create" class="btn btn-success mb-2">Create New Course</a>
-
 <table class="table">
     <thead>
         <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Status</th>
-            <th>Category</th>
-            <th>User</th>
+            <th>Название</th>
+            <th>Описание</th>
+            <th>Категория</th>
+            <th>Действия</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var course in Model)
+        @if (Model != null)
         {
-            <tr>
-                <td>@course.Title</td>
-                <td>@course.Description</td>
-                <td>@course.Status</td>
-                <td>@course.Category</td>
-                <td>@course.UserProfile.PhoneNumber</td>
-            </tr>
+            @foreach (var course in Model)
+            {
+                <tr>
+                    <td>@course.Title</td>
+                    <td>@course.Description</td>
+                    <td>@course.Category</td>
+                    <td>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <a asp-controller="Booking" asp-action="Create" asp-route-coursesId="@course.Id" class="btn btn-primary">Забронировать</a>
+                        }
+                    </td>
+                </tr>
+            }
         }
     </tbody>
 </table>
+<a asp-action="Create" class="btn btn-primary">Создать курс</a>

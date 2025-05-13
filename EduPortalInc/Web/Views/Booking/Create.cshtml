@@ -1,0 +1,12 @@
+﻿@model Domain.Entities.Booking
+<h1>Бронирование курса: @ViewBag.Course.Title</h1>
+<form asp-action="Create" method="post">
+    <input type="hidden" asp-for="CoursesId" />
+    <div class="form-group">
+        <label asp-for="BookingDate" class="control-label"></label>
+        <input asp-for="BookingDate" class="form-control" type="date" />
+        <span asp-validation-for="BookingDate" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Перейти к подтверждению</button>
+    <a asp-controller="Courses" asp-action="Index" class="btn btn-secondary">Отмена</a>
+</form>

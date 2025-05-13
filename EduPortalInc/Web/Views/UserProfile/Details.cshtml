@@ -1,20 +1,22 @@
 ﻿@model Domain.Entities.UserProfile
-
-<h1>User Profile Details</h1>
-
+<h1>Детали профиля</h1>
 <div>
-    <h3>Phone Number:</h3>
+    <h3>Номер телефона:</h3>
     <p>@Model.PhoneNumber</p>
-
-    <h3>Bio:</h3>
+    <h3>Биография:</h3>
     <p>@Model.Bio</p>
-
-    <h3>Date of Birth:</h3>
+    <h3>Дата рождения:</h3>
     <p>@Model.DateOfBirth.ToString("d")</p>
-
+    <h3>Курсы:</h3>
+    <ul>
+        @foreach (var course in Model.Courses)
+        {
+            <li>@course.Title</li>
+        }
+    </ul>
     <p>
-        <a href="@Url.Action("Edit", "UserProfile", new { id = Model.Id })">Edit</a> |
-        <a href="@Url.Action("Delete", "UserProfile", new { id = Model.Id })">Delete</a> |
-        <a href="@Url.Action("Index", "UserProfile")">Back to List</a>
+        <a href="@Url.Action("Edit", "UserProfile", new { id = Model.Id })">Редактировать</a> |
+        <a href="@Url.Action("Delete", "UserProfile", new { id = Model.Id })">Удалить</a> |
+        <a href="@Url.Action("Index", "Courses")">Вернуться к курсам</a>
     </p>
 </div>

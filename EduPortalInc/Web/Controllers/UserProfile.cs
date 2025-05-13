@@ -1,6 +1,6 @@
-﻿using Infrastructure.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Infrastructure.Data;
 using Domain.Entities;
 using System.Threading.Tasks;
 
@@ -10,7 +10,7 @@ public class UserProfileController : Controller
 
     public UserProfileController(ApplicationDbContext context)
     {
-        _context = context;
+        _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
     public async Task<IActionResult> Index()
@@ -34,7 +34,7 @@ public class UserProfileController : Controller
 
         try
         {
-            _context.UserProfiles.Add(userProfile); 
+            _context.UserProfiles.Add(userProfile);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
@@ -48,14 +48,20 @@ public class UserProfileController : Controller
     public async Task<IActionResult> Edit(int id)
     {
         var userProfile = await _context.UserProfiles.FindAsync(id);
-        if (userProfile == null) return NotFound();
+        if (userProfile == null)
+        {
+            return NotFound();
+        }
         return View(userProfile);
     }
 
     [HttpPost]
     public async Task<IActionResult> Edit(int id, UserProfile userProfile)
     {
-        if (id != userProfile.Id) return NotFound();
+        if (id != userProfile.Id)
+        {
+            return NotFound();
+        }
 
         if (!ModelState.IsValid)
         {
@@ -71,8 +77,9 @@ public class UserProfileController : Controller
         catch (DbUpdateConcurrencyException)
         {
             if (!await UserProfileExists(userProfile.Id))
+            {
                 return NotFound();
-
+            }
             throw;
         }
         catch (DbUpdateException)
@@ -85,26 +92,32 @@ public class UserProfileController : Controller
     public async Task<IActionResult> Delete(int id)
     {
         var userProfile = await _context.UserProfiles.FindAsync(id);
-        if (userProfile == null) return NotFound();
+        if (userProfile == null)
+        {
+            return NotFound();
+        }
         return View(userProfile);
     }
 
-   [HttpPost]
-public async Task<IActionResult> DeleteConfirmed(int id)
-{
-    var userProfile = await _context.UserProfiles.FindAsync(id);
-    if (userProfile != null)
+    [HttpPost]
+    public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        _context.UserProfiles.Remove(userProfile);
-        await _context.SaveChangesAsync();
+        var userProfile = await _context.UserProfiles.FindAsync(id);
+        if (userProfile != null)
+        {
+            _context.UserProfiles.Remove(userProfile);
+            await _context.SaveChangesAsync();
+        }
+        return RedirectToAction(nameof(Index));
     }
-    return RedirectToAction(nameof(Index));
-}
 
     public async Task<IActionResult> Details(int id)
     {
         var userProfile = await _context.UserProfiles.FindAsync(id);
-        if (userProfile == null) return NotFound();
+        if (userProfile == null)
+        {
+            return NotFound();
+        }
         return View(userProfile);
     }
 

@@ -1,0 +1,9 @@
+﻿@model Domain.Entities.Booking
+<h1>Бронирование подтверждено</h1>
+<div>
+    <h3>Спасибо за бронирование!</h3>
+    <p>Курс: @Model.Courses.Title</p>
+    <p>Дата бронирования: @Model.BookingDate.ToString("d")</p>
+    <p>Статус: @Model.Status</p>
+    <a asp-controller="Courses" asp-action="Index" class="btn btn-primary">Вернуться к курсам</a>
+</div>

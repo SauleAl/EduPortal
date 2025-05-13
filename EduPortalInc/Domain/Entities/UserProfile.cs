@@ -16,9 +16,6 @@ namespace Domain.Entities
         [Required(ErrorMessage = "Ввод даты обязателен")]
         public DateTime DateOfBirth { get; set; }
 
-        public List<Courses> Courses { get; set; } = new List<Courses>();
+        public List<Courses> Courses { get; set; } = new List<Courses>(); // Уже инициализировано
     }
-
-
 }
-
